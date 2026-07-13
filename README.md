@@ -1,101 +1,54 @@
-# Microsoft Fabric Skills
+# Skills for Fabric — Claude Edition
 
-Microsoft Fabric Skills are reusable AI assistant instructions for working with Microsoft Fabric. They help GitHub Copilot CLI and compatible AI coding tools understand Fabric workloads, APIs, query patterns, and operational best practices.
+A Claude Code / Cowork plugin marketplace of skills, agents, and MCP servers for working with **Microsoft Fabric** and **Power BI**.
 
-## Install with GitHub Copilot CLI
+This is a repackaging of Microsoft's [`microsoft/skills-for-fabric`](https://github.com/microsoft/skills-for-fabric) (originally built for GitHub Copilot CLI) so that it installs cleanly through Claude's marketplace flows. All skill, agent, and reference content is Microsoft's; only the packaging was changed. See [`REPACKAGE-FOR-CLAUDE.md`](./REPACKAGE-FOR-CLAUDE.md) for the exact diff.
 
-Add the public marketplace:
+## What's inside
 
-```bash
-/plugin marketplace add microsoft/skills-for-fabric
+The marketplace is named `fabric-collection` and ships five plugins:
+
+| Plugin | Skills | Agents | MCP server | Use it for |
+| --- | --- | --- | --- | --- |
+| `fabric-skills` | 31 | 4 | FabricIQ (HTTP) | The complete bundle — everything below in one install |
+| `fabric-authoring` | 12 | 3 | — | Building Fabric solutions: SDKs, APIs, automation, CI/CD |
+| `fabric-consumption` | 12 | 4 | FabricIQ (HTTP) | Interactive work: querying, exploring, and monitoring |
+| `fabric-operations` | 5 | 3 | — | Diagnosing Fabric performance and health |
+| `powerbi-authoring` | 6 | — | powerbi-modeling-mcp (stdio) | Power BI development: semantic models, PBIP/PBIR, reports |
+
+Skills cover SQL warehouse/database, Spark, Eventhouse/KQL, Eventstream, Activator, Dataflows, semantic-model authoring and consumption, FabricIQ, medallion architecture, and migrations (Databricks, Synapse, HDInsight, pipelines).
+
+Install `fabric-skills` for the full set, or pick a focused plugin if you only need one area.
+
+## Install
+
+**Requirement:** for the personal "Add marketplace" flow, this repo must be **public** — Cowork's sync fetches it anonymously, and private repos fail.
+
+### Cowork (Claude Desktop)
+Directory → Plugins → **Add marketplace** → paste `your-user/your-repo` → **Sync**, then install the plugins you want.
+
+### Claude Code (CLI)
 ```
-
-Install the full bundle (except `powerbi-authoring`):
-
-```bash
+/plugin marketplace add your-user/your-repo
 /plugin install fabric-skills@fabric-collection
 ```
+Or install a focused plugin, e.g. `/plugin install powerbi-authoring@fabric-collection`.
 
-Or install a focused bundle:
+Verify with `/plugin list`.
 
-```bash
-# Authoring: APIs, automation, notebooks, schemas, ingestion, and deployment
-/plugin install fabric-authoring@fabric-collection
+## MCP servers & authentication
 
-# Consumption: interactive querying, discovery, exploration, and monitoring
-/plugin install fabric-consumption@fabric-collection
+Three plugins ship MCP servers that connect Claude to live Fabric / Power BI data:
 
-# Operations: diagnostics and performance investigation
-/plugin install fabric-operations@fabric-collection
+- **FabricIQ** (`fabric-skills`, `fabric-consumption`) — HTTP server at the Fabric AI hub endpoint. Used to discover artifacts, inspect semantic-model schemas, and run DAX. Gated behind Microsoft 365 sign-in; you'll authenticate on first use.
+- **powerbi-modeling-mcp** (`powerbi-authoring`) — runs locally via `npx @microsoft/powerbi-modeling-mcp`. Requires Node.js.
 
-# Power BI authoring: semantic models, Power BI report skills, and PBIP workflows
-/plugin install powerbi-authoring@fabric-collection
-```
+Once connected, you can ask data questions against your semantic models directly (e.g. querying your marketing semantic model), and Claude will generate and run the DAX for you.
 
-You can also filter the full bundle by workload:
+## Maintaining this fork
 
-```bash
-/plugin install fabric-skills@fabric-collection --filter "sqldw-*"
-/plugin install fabric-skills@fabric-collection --filter "spark-*"
-/plugin install fabric-skills@fabric-collection --filter "eventhouse-*"
-```
+The packaging changes are scriptable, so when Microsoft updates the upstream repo you can re-apply them against the newer version rather than hand-editing. If anything in the upstream layout changes, re-run `claude plugin validate .` before pushing.
 
-## What is included
+## Attribution & license
 
-| Bundle | Use it for |
-|--------|------------|
-| `fabric-skills` | Complete Microsoft Fabric skill bundle, including authoring, consumption, operations, migration, and end-to-end architecture skills. |
-| `fabric-authoring` | Creating and managing Fabric items through REST APIs, CLI automation, notebooks, T-SQL, KQL, Dataflows Gen2, Eventstreams, and semantic models. |
-| `fabric-consumption` | Read-only exploration and query workflows across Warehouses, Lakehouses, Power BI semantic models, Eventhouse/KQL databases, Eventstreams, Dataflows Gen2, and catalog search. |
-| `fabric-operations` | Performance and health diagnostics, including warehouse query insights and slow-query investigation. |
-| `powerbi-authoring` | Authoring Power BI semantic models, reports, and PBIP workflows, including Power BI report planning, design, authoring, and management. |
-
-The full bundle includes skills for SQL data warehouse, Spark and Lakehouse, Power BI semantic models, Eventhouse and KQL, Eventstreams, Dataflows Gen2, catalog search, migration scenarios, and medallion architecture workflows.
-
-See [CHANGELOG.md](CHANGELOG.md) for public release notes.
-
-## Try an example prompt
-
-- [Analytics PDF report](prompt_examples/NYC_AnalyzeExistingDataCreatePDF.txt)
-- [Document my workspace](prompt_examples/DocumentMyWorkspace.txt)
-- [NYC Taxi medallion architecture](prompt_examples/NYCTaxi_MedallionArchitecture.txt)
-- [Dashboard app](prompt_examples/DashboardApp.txt)
-
-After installing a bundle, open Copilot CLI in a project folder and ask for the Fabric task you want to perform, for example:
-
-```text
-Use Microsoft Fabric skills to design a medallion architecture for NYC taxi data.
-```
-
-## Authentication
-
-Most Fabric operations require Azure authentication. Start with:
-
-```bash
-az login
-az account get-access-token --resource https://api.fabric.microsoft.com
-```
-
-SQL, Spark, Power BI, and KQL workflows may require workload-specific endpoints or token audiences. The installed skills provide the detailed commands and API patterns for each workload.
-
-## MCP servers
-
-Skills provide guidance and patterns. MCP servers provide live tool access to data sources and APIs. Some bundles include MCP configuration where supported, and you can register additional Fabric MCP servers if your environment provides them.
-
-See [MCP setup](mcp-setup/README.md).
-
-## Other AI coding tools
-
-GitHub Copilot CLI plugin installation is the recommended path. This repository also includes root-level configuration files for compatible AI coding tools — [CLAUDE.md](CLAUDE.md) for Claude Code, [.cursorrules](.cursorrules) for Cursor, [.windsurfrules](.windsurfrules) for Windsurf, and [AGENTS.md](AGENTS.md) for Codex / Jules / OpenCode. They are picked up automatically when the repo is cloned.
-
-Gemini CLI also auto-discovers [GEMINI.md](GEMINI.md) when the repo is cloned.
-
-## Issues and security
-
-Report product issues in the [GitHub issue tracker](https://github.com/microsoft/skills-for-fabric/issues).
-
-For security vulnerabilities, do not open a public issue. See [SECURITY.md](SECURITY.md) for the private reporting path.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
+Original work © Microsoft, licensed under MIT (see [`LICENSE`](./LICENSE)). This repackaging preserves that license and makes no changes to the skill/agent content.
