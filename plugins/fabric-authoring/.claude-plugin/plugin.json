@@ -1,0 +1,21 @@
+{
+  "name": "fabric-authoring",
+  "version": "0.3.7",
+  "description": "Developer skills for authoring Microsoft Fabric solutions - SDKs, APIs, automation scripts, CI/CD.",
+  "author": {
+    "name": "Microsoft",
+    "url": "https://github.com/microsoft/skills-for-fabric"
+  },
+  "homepage": "https://github.com/microsoft/skills-for-fabric",
+  "repository": "https://github.com/microsoft/skills-for-fabric",
+  "license": "MIT",
+  "keywords": [
+    "fabric",
+    "microsoft-fabric",
+    "authoring",
+    "developer",
+    "medallion",
+    "sdk",
+    "api"
+  ]
+}

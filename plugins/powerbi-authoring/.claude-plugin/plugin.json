@@ -1,0 +1,22 @@
+{
+  "name": "powerbi-authoring",
+  "version": "0.3.7",
+  "description": "Developer skills for authoring Microsoft Power BI solutions - semantic models, PBIP/PBIR, reports.",
+  "author": {
+    "name": "Microsoft",
+    "url": "https://github.com/microsoft/skills-for-fabric"
+  },
+  "homepage": "https://github.com/microsoft/skills-for-fabric",
+  "repository": "https://github.com/microsoft/skills-for-fabric",
+  "license": "MIT",
+  "keywords": [
+    "fabric",
+    "microsoft-fabric",
+    "powerbi",
+    "semantic-model",
+    "pbip",
+    "pbir",
+    "report",
+    "developer"
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "name": "fabric-collection",
+  "description": "Microsoft Skills for Fabric - repackaged for Claude Code / Cowork. Skills, agents, and MCP servers for working with Microsoft Fabric and Power BI.",
+  "owner": {
+    "name": "Microsoft",
+    "url": "https://github.com/microsoft/skills-for-fabric"
+  },
+  "metadata": {
+    "version": "0.3.7"
+  },
+  "plugins": [
+    {
+      "name": "fabric-skills",
+      "source": "./plugins/fabric-skills",
+      "description": "Complete bundle: all Microsoft Skills for Fabric for developers and consumers.",
+      "version": "0.3.7"
+    },
+    {
+      "name": "fabric-authoring",
+      "source": "./plugins/fabric-authoring",
+      "description": "Developer skills for authoring Microsoft Fabric solutions - SDKs, APIs, automation scripts, CI/CD.",
+      "version": "0.3.7"
+    },
+    {
+      "name": "fabric-consumption",
+      "source": "./plugins/fabric-consumption",
+      "description": "Consumer skills for interactive Microsoft Fabric operations - queries, exploration, monitoring.",
+      "version": "0.3.7"
+    },
+    {
+      "name": "fabric-operations",
+      "source": "./plugins/fabric-operations",
+      "description": "Operations skills for diagnosing Microsoft Fabric performance and health - system views, investigation workflows.",
+      "version": "0.3.7"
+    },
+    {
+      "name": "powerbi-authoring",
+      "source": "./plugins/powerbi-authoring",
+      "description": "Developer skills for authoring Microsoft Power BI solutions - semantic models, PBIP/PBIR, reports.",
+      "version": "0.3.7"
+    }
+  ]
+}
